@@ -41,16 +41,26 @@ class _HomePageState extends State<HomePage> {
   void saveNewTask() {
     setState(() {
       print(db.toDoList);
-      db.toDoList.add([
-        _titlecontroller.text,
-        _todocontroller.text,
-        "${date.day}/${date.month}/${date.year}"
-      ]);
-      _todocontroller.clear();
-      _titlecontroller.clear();
+      if (_titlecontroller.text.isNotEmpty && _todocontroller.text.isNotEmpty) {
+        db.toDoList.add([
+          _titlecontroller.text,
+          _todocontroller.text,
+          "${date.day}/${date.month}/${date.year}"
+        ]);
+        _todocontroller.clear();
+        _titlecontroller.clear();
+        Navigator.of(context).pop();
+        db.updateDataBase();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('please add todo and title'),
+          action: SnackBarAction(
+            label: 'dismiss',
+            onPressed: () {},
+          ),
+        ));
+      }
     });
-    Navigator.of(context).pop();
-    db.updateDataBase();
   }
 
   // create a new task

@@ -64,17 +64,15 @@ class DialogBox extends StatelessWidget {
                               height, //when it reach the max it will use scroll
                           maxWidth: width,
                         ),
-                        child: Expanded(
-                          child: TextFormField(
-                              style: ToDoStyle.fontWeight400FontSize15,
-                              scrollPadding: EdgeInsets.all(20.0),
-                              autofocus: true,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              minLines: 1,
-                              controller: todocontroller,
-                              decoration: ToDoStyle.newtaskDecoration),
-                        ),
+                        child: TextFormField(
+                            style: ToDoStyle.fontWeight400FontSize15,
+                            scrollPadding: EdgeInsets.all(20.0),
+                            autofocus: true,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            minLines: 1,
+                            controller: todocontroller,
+                            decoration: ToDoStyle.newtaskDecoration),
                       ),
                     ),
                   ],

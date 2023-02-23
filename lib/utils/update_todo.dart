@@ -38,23 +38,27 @@ class _UpdateToDoState extends State<UpdateToDo> {
 // update new task
   void UpdateTodo() {
     setState(() {
-      // print(db.toDoList);
-      // db.toDoList.insert(widget.index, [
-      //   _titlecontroller.text,
-      //   _todocontroller.text,
-      //   "${date.day}/${date.month}/${date.year}"
-      // ]);
-      db.toDoList[widget.index] = [
-        _titlecontroller.text,
-        _todocontroller.text,
-        "${date.day}/${date.month}/${date.year}"
-      ];
+      if (_titlecontroller.text.isNotEmpty && _todocontroller.text.isNotEmpty) {
+        db.toDoList[widget.index] = [
+          _titlecontroller.text,
+          _todocontroller.text,
+          "${date.day}/${date.month}/${date.year}"
+        ];
 
-      _todocontroller.clear();
-      _titlecontroller.clear();
-      db.updateDataBase();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomePage()));
+        _todocontroller.clear();
+        _titlecontroller.clear();
+        db.updateDataBase();
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => HomePage()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('please add todo and title'),
+          action: SnackBarAction(
+            label: 'dismiss',
+            onPressed: () {},
+          ),
+        ));
+      }
     });
   }
 
@@ -142,6 +146,7 @@ class _UpdateToDoState extends State<UpdateToDo> {
                             }),
                             child: Icon(Icons.arrow_back)),
                         PopupMenuButton<int>(
+                          child: Icon(Icons.more_vert),
                           itemBuilder: (context) => [
                             PopupMenuItem(
                               value: 1,
@@ -179,18 +184,16 @@ class _UpdateToDoState extends State<UpdateToDo> {
                               height, //when it reach the max it will use scroll
                           maxWidth: width,
                         ),
-                        child: Expanded(
-                          child: TextFormField(
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w400),
-                              scrollPadding: EdgeInsets.all(20.0),
-                              autofocus: true,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              minLines: 1,
-                              controller: _todocontroller,
-                              decoration: ToDoStyle.newtaskDecoration),
-                        ),
+                        child: TextFormField(
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w400),
+                            scrollPadding: EdgeInsets.all(20.0),
+                            autofocus: true,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            minLines: 1,
+                            controller: _todocontroller,
+                            decoration: ToDoStyle.newtaskDecoration),
                       ),
                     ),
                   ],
